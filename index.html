@@ -56,11 +56,17 @@
         </div>
         <div style="display: flex; justify-content: center; padding-left: 50px;">
             <button style="background-color: white; border: 0; padding-left: 15px; padding-right: 15px; padding-top: 10px; padding-bottom: 10px; font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif; font-size: large; border-radius: 5px; margin-top: 20px; margin-bottom: 20px; cursor: pointer; vertical-align: middle;"
-            onclick="function resetScore() {
-                alert('Score has been reset!');
-            }
+            onclick="
+            score.wins = 0;
+            score.losses = 0;
+            score.ties = 0;
             ">Reset Score💯</button>
             <script>
+                const score = {
+                    wins : 0,
+                    losses : 0,
+                    ties : 0
+                };
                 function playGame(playerMove) {
                     const computerMove = pickComputerMove();
    
@@ -74,7 +80,7 @@
                         result = 'Tie🎯';
                     }
                     }
-                    
+
                     else if (playerMove === 'Paper📜') {
                         result = '';
                     if (computerMove === 'Rock🪨') {
@@ -95,8 +101,16 @@
                         result = 'You win🏆';
                     }
                     }
+                    if (result === 'You win🏆') {
+                        score.wins = score.wins + 1;
+                    } else if (result === 'You lose👎🏽') {
+                        score.losses = score.losses + 1;
+                    } else if (result === 'Tie🎯') {
+                        score.ties = score.ties + 1;
+                    }
 
-                    alert(`You picked ${playerMove}. Computer picked ${computerMove}. ${result}`);
+                    alert(`You picked ${playerMove}. Computer picked ${computerMove}. ${result}
+Wins : ${score.wins}, Losses : ${score.losses}, Ties : ${score.ties}`);
 
                 }
                 function pickComputerMove() {
