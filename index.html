@@ -45,15 +45,10 @@
         </div>
     </div>
     <div style="color: white; display: flex; justify-content: center; font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif; align-items: center;">
-        <div style="padding-left: 8px;">
-            <p style="font-size: larger;">Wins: <span id="wins">0,</span></p>
+        <div>
+            <p class="js-score" style="font-size: larger;"></p>
         </div>
-        <div  style="padding-left: 8px;">
-            <p style="font-size: larger;">Losses: <span id="losses">0,</span></p>
-        </div>
-        <div  style="padding-left: 8px;">
-            <p style="font-size: larger;">Ties: <span id="ties">0.</span></p>
-        </div>
+       
         <div style="display: flex; justify-content: center; padding-left: 50px;">
             <button style="background-color: white; border: 0; padding-left: 15px; padding-right: 15px; padding-top: 10px; padding-bottom: 10px; font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif; font-size: large; border-radius: 5px; margin-top: 20px; margin-bottom: 20px; cursor: pointer; vertical-align: middle;"
             onclick="
@@ -61,6 +56,7 @@
             score.losses = 0;
             score.ties = 0;
             localStorage.removeItem('score');
+            updateScoreElement();
             ">Reset Score💯</button>
             <script>
                 let score = JSON.parse(localStorage.getItem('score')) ||  {
@@ -68,7 +64,10 @@
                         losses : 0,
                         ties : 0
                     };
-                /*
+
+                    updateScoreElement();
+
+                /* for reference
                 if (!score) {
                     score = {
                         wins : 0,
@@ -120,10 +119,15 @@
                         score.ties = score.ties + 1;
                     }
                     localStorage.setItem('score', JSON.stringify(score));
+                    
+                    updateScoreElement();
 
                     alert(`You picked ${playerMove}. Computer picked ${computerMove}. ${result}
 Wins : ${score.wins}, Losses : ${score.losses}, Ties : ${score.ties}`);
-
+                }
+                function updateScoreElement() {
+                    document.querySelector('.js-score')
+                    .innerHTML = `Wins : ${score.wins}, Losses : ${score.losses}, Ties : ${score.ties}`;
                 }
                 function pickComputerMove() {
                     const randomNumber = Math.random();
